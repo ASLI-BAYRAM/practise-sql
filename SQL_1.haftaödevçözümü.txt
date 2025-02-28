@@ -1,0 +1,59 @@
+----------------------------
+--SİMPLE SELECT STATEMENTS
+-----------------------------
+--SELECT komutu, veri tabanından veri çekmek için kullanılır.
+--* ifadesi tablolarda bulunan tüm kolanları ekrana yazdır demektir.
+--yani employees veri setinde bulunan tüm kolonları getirecektir.
+
+select*from employees;
+
+select*from departments;
+---------------------------------------------------------------
+--Görev1: Belirli Kolonları seçme,,Çalışanların sadece FirstName, LastName ve Salary bilgilerini getiren bir SQL sorgusu
+--select ile firstname, lastname, salary kolonlarını sectik.
+--from employees diyerekte hangi tablodan istediğimizi belirttik.
+--Kolon şecerken aralarına virgül koymak zorundayız.
+
+select firstname, lastname, salary
+from employees;
+----------------------------------------------------------------------------------------------------
+--Görev2:DISTINCT Komutu İle Tekrarları Önleme,Çalışanların çalıştıkları departmanları benzersiz olarak listeleyen bir SQL sorgusu yazınız.
+-- tablo içindeki tüm sütunları kontrol eder ve tamamen aynı olan satırlardan sadece bir tanesini gösterir.
+--Yani tamamen aynı iki satır varsa bu satırlardan birini seçer.
+select distinct * from employees;
+
+--Bu sorgu, departmentid sütunundaki benzersiz değerleri getirir.
+--Depertmanıd 1 2 3 birden çok kez vardı bu sorgu ile beraber sadece ekrana 3 2 1 seklinde cıktı geldi.
+select distinct departmentid
+from employees; 
+
+-------------------------------------------------------------------------------------------------
+--Görev3:Belirli Bir Departmana Ait Çalışanları Listeleme Belirli Bir Departmana Ait Çalışanları Listeleme
+--Sadece IT departmanında çalışanların bilgilerini getiren bir SQL sorgusu yazınız.
+select departmentid,departmentname 
+from departments
+where departmentname = 'IT' ;
+
+select *from employees
+where departmentid = 1 ;
+
+----------------------------------------------------------------------------------------------------
+--Görev4:Maaşa Göre Sıralama,Çalışanları maaşlarına göre büyükten küçüğe sıralayan bir SQL sorgusu yazınız.
+--sıralama işlemini order by komutu ile yapabiliriz.ASC yazarsak artan yönde desc yazarsak azaln yönde bir sıralama yapar.
+--order by default olarac asc kullanır.
+select* from employees
+order by salary desc;
+
+--belli kolonları görmek istersek
+select employeeid, salary
+from employees
+order by salary desc;
+-----------------------------------------------------------------------------------------------------------------
+--Görev:5 Kolonları Birleştirme (Concatenation)
+--Çalışanların FirstName ve LastName alanlarını birleştirerek, tam adlarını içeren yeni bir kolon oluşturan bir SQL sorgusu yazınız.
+
+--firstname lastname sutunlarını  || ' ' || ile concat ederek full_name adında yeni bir sutun oluşturdum.
+--Böylece iki sutunu birleştirmiş olduk. Yani john ve doe ayrı sutunlardaydı şimdi tek sutunda JOE DOE bilgisi var.
+select firstname, lastname,
+       firstname || ' ' || lastname sutunlarını  as full_name
+from employees;
