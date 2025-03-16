@@ -1,0 +1,40 @@
+--SORU1:
+--Invoice tablosunda, tüm değerleri NULL olan kayıtların sayısını bulmanız isteniyor. 
+--Bu işlemi tek bir sorgu ile yapmalısınız. Sorguyu yazdıktan sonra, PostgreSQL’in sol alt kısmındaki Row sayısını, SQL sorgunuzda yorum satırında belirtmeniz gerekmektedir.
+--ÇÖZÜM--
+
+--IS NULL OPERATOR
+--Boş olan kayıtları sorgularız
+--Total rows: 202+28 null değer var. Fakat bu kodu tek satırda yazamadım!!!!
+
+select*from invoice
+where billing_state is null  billingpostal_code is null ;
+
+select*from invoice
+where billingpostal_code is null;
+--------------------------------------------------------
+--SORU2:
+--Koordinasyondaki kişiler, Total değerlerinde bir hata olduğunu belirtiyorlar. 
+--Bu değerlerin iki katını görmek ve eski versiyonlarıyla birlikte karşılaştırmak için bir sorgu yazmanız isteniyor. 
+--Ayrıca, verilerin daha rahat takip edilebilmesi için, tablonun yeni versiyonuna ait kolona göre büyükten küçüğe sıralama yapılması isteniyor.
+
+--ÇÖZÜM--
+--ilk olarak total sutununu select ile şeçtik. Seçtiğimiz sutunu iki ile çarpıp n_total adında yeni bir sutun oluşturduk.
+--order by ile sıralama yaptık.Order by in ön tanımlı değeri asc'tir.Küçükten büyüğe sıralar biz desc ile byükten küçüğe sıraladık.
+
+select total, total*2 as  n_total
+from invoice
+order by  n_total desc;
+--------------------------------------------------------
+--SORU3:
+--3.Adres kolonundaki verileri, soldan 3 karakter ve sağdan 4 karakter alarak birleştirmeniz ve "Açık Adres" olarak yazmanız isteniyor. 
+--Ayrıca, bu yeni açık adresi 2013 yılı ve 8. ay’a göre filtrelemeniz gerekiyor.
+--ÇÖZÜM--
+--left ve right ile adres sutunundan istenilen aralıkta seçim yaptık.
+--Sectiğimziz aralıkları concat ile birleştirdik
+--where ile satır bazlı filtreleme işlemi yaptık.
+SELECT 
+    billing_address,invoice_date,
+    CONCAT(LEFT(billing_address, 3), '.', RIGHT(billing_address, 4)) AS Acik_Adres
+FROM invoice
+where invoice_date between '2013-08-01' and '2013-08-31';
